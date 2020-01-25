@@ -45,8 +45,23 @@ router.route('/seats').post((req, res) => {
   const id = Math.floor(Math.random()*100);
 
   if(day && seat && client && email) {
+    const intDay = parseInt(day);
+    const intSeat = parseInt(seat);
+
+    const isSeatTaken = (element) => {
+      if(element.day === intDay) {
+        if(element.seat === intSeat) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (db.seats.some(isSeatTaken)) res.json({ message: 'The slot is already taken...' });
+
+
     const newRecord = {
-      id, day, seat, client, email
+      id, intDay, intSeat, client, email
     };
 
     db.seats.push(newRecord);
