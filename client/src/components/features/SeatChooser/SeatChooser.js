@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Progress, Alert } from 'reactstrap';
+import io from 'socket.io-client';
 
 import './SeatChooser.scss';
 
@@ -9,6 +10,8 @@ class SeatChooser extends React.Component {
     const { loadSeats } = this.props;
     loadSeats();
   }
+
+  socket = io.connect((process.env.NODE_ENV === 'production') ? process.env.PORT : 'http://localhost:8000/order-a-ticket');
 
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
@@ -29,6 +32,7 @@ class SeatChooser extends React.Component {
 
     const { prepareSeat } = this;
     const { requests } = this.props;
+    console.log(this.socket);
 
     return (
       <div>
