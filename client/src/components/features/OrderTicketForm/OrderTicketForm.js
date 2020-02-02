@@ -8,24 +8,12 @@ class OrderTicketForm extends React.Component {
 
   state = {
     order: {
-      client: '',
+      name: '',
       email: '',
       day: 1,
       seat: '',
     },
     isError: false,
-  }
-
-  interval = 0;
-
-  componentDidMount() {
-    const { loadSeats } = this.props;
-    loadSeats();
-    this.interval = setInterval(loadSeats, 60000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
   }
 
   updateSeat = (e, seatId) => {
@@ -51,16 +39,15 @@ class OrderTicketForm extends React.Component {
 
   submitForm = async (e) => {
     const { order } = this.state;
-    const { addSeat, loadSeats } = this.props;
+    const { addSeat } = this.props;
 
     e.preventDefault();
 
-    if(order.client && order.email && order.day && order.seat) {
+    if(order.name && order.email && order.day && order.seat) {
        await addSeat(order);
-       loadSeats();
       this.setState({ 
         order: {
-          client: '',
+          name: '',
           email: '',
           day: 1,
           seat: '',
@@ -87,15 +74,15 @@ class OrderTicketForm extends React.Component {
             { (requests['ADD_SEAT'] && requests['ADD_SEAT'].success && !isError) && <Alert color="success">You've booked your ticket! Check you email in order to make a payment.</Alert> }
             { (requests['ADD_SEAT'] && requests['ADD_SEAT'].pending) && <Progress animated className="mb-5" color="primary" value={75} /> }
             <FormGroup>
-              <Label for="clientEmail">Name</Label>
-              <Input type="text" value={order.client} name="client" onChange={updateTextField} id="clientName" placeholder="John Doe" />
+              <Label for="nameName">Name</Label>
+              <Input type="text" value={order.name} name="name" onChange={updateTextField} id="nameName" placeholder="John Doe" />
             </FormGroup>
             <FormGroup>
-              <Label for="clientEmail">Email</Label>
-              <Input type="email" value={order.email} name="email" onChange={updateTextField} id="clientEmail" placeholder="johndoe@example.com" />
+              <Label for="nameEmail">Email</Label>
+              <Input type="email" value={order.email} name="email" onChange={updateTextField} id="nameEmail" placeholder="johndoe@example.com" />
             </FormGroup>
             <FormGroup>
-              <Label for="clientDay">Select which day of festivals are you interested in:</Label>
+              <Label for="nameDay">Select which day of festivals are you interested in:</Label>
               <Input type="select" value={order.day} name="day" onChange={updateNumberField} id="exampleSelect">
                 <option>1</option>
                 <option>2</option>
