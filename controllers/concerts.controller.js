@@ -3,6 +3,7 @@ const Concert = require('../models/concert.model');
 exports.getAll = async (req, res) => {
   try {
     res.json(await Concert.find());
+    // console.log(Concert.find())
   }
   catch(err) {
     res.status(500).json(err); 
