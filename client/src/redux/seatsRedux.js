@@ -38,7 +38,7 @@ export const loadSeatsRequest = () => {
       dispatch(endRequest({ name: 'LOAD_SEATS' }));
 
     } catch(e) {
-      dispatch(errorRequest({ name: 'LOAD_SEATS', error: e.message }));
+      dispatch(errorRequest({ name: 'ERROR_REQUEST', error: e.message }));
     }
 
   };
@@ -51,11 +51,12 @@ export const addSeatRequest = (seat) => {
     try {
 
       let res = await axios.post(`${API_URL}/seats`, seat);
+      console.log(res)
       dispatch(addSeat(res));
       dispatch(endRequest({ name: 'ADD_SEAT' }));
 
     } catch(e) {
-      dispatch(errorRequest({ name: 'ADD_SEAT', error: e.message }));
+      dispatch(errorRequest({ name: 'ERROR_REQUEST', error: e.message }));
     }
 
   };
@@ -80,8 +81,8 @@ export default function reducer(statePart = initialState, action = {}) {
       return { ...statePart, requests: {...statePart.requests, [action.payload.name]: { pending: true, error: null, success: false }} };
     case END_REQUEST:
       return { ...statePart, requests: { ...statePart.requests, [action.payload.name]: { pending: false, error: null, success: true }} };
-    case ERROR_REQUEST:
-      return { ...statePart, requests: { ...statePart.requests, [action.payload.name]: { pending: false, error: action.payload.error, success: false }} };
+      case ERROR_REQUEST:
+        return { ...statePart, requests: { ...statePart.requests, [action.error.name]: { pending: false, error: action.error.error, success: false }} };
     default:
       return statePart;
   }
