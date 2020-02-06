@@ -4,15 +4,19 @@
   "description": "",
   "main": "db.js",
   "dependencies": {
+    "chai": "4.2.0",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mocha": "6.2.1",
     "mongoose": "^5.8.11",
+    "nodemon": "^2.0.2",
+    "onchange": "^6.1.0",
     "socket.io": "^2.3.0"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "test": "mocha \"./{,!(node_modules)/**/}*.test.js\"",
+    "test:watch": "onchange \"./**/*.js\" -i -k -- yarn test",    "start": "nodemon server.js",
     "build": "cd client && npm install && npm build"
   },
   "keywords": [],
