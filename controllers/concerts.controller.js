@@ -5,6 +5,7 @@ exports.getAll = async (req, res) => {
   try {
     const seats = await Seat.find();
     const gigs = await Concert.find();
+    console.log(gigs)
     for (let gig of gigs) {
       let seatsTaken = 0;
       for (let seat of seats) {
